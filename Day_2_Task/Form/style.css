@@ -1,0 +1,57 @@
+body {
+    background: url("https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&w=1080&q=80");
+    background-size: cover;
+    background-position: center;
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.88);
+    padding: 25px 28px;
+    width: 380px;
+    border-radius: 10px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.25);
+    backdrop-filter: blur(4px);
+}
+
+.container h2 {
+    text-align: center;
+    margin-bottom: 18px;
+    color: #047b99;
+}
+
+form label {
+    font-weight: bold;
+    margin-top: 12px;
+    display: block;
+}
+
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 6px;
+    border: 1px solid #8ad2e0;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+button {
+    width: 100%;
+    background: #05b4d9;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 16px;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #0494b1;
+}
