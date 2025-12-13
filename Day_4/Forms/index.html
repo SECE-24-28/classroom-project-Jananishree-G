@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Ticket Booking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            background: #000;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(180deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.7) 100%),
+                url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -1;
+        }
+
+        .curtain-left, .curtain-right {
+            position: fixed;
+            top: 0;
+            width: 15%;
+            height: 100%;
+            background: linear-gradient(90deg, #8B0000 0%, #DC143C 50%, #8B0000 100%);
+            z-index: 0;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.5);
+        }
+
+        .curtain-left {
+            left: 0;
+            border-right: 3px solid #FFD700;
+        }
+
+        .curtain-right {
+            right: 0;
+            border-left: 3px solid #FFD700;
+        }
+
+        .film-strip {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 30px;
+            background: #1a1a1a;
+            border-top: 3px solid #FFD700;
+            border-bottom: 3px solid #FFD700;
+            z-index: 1;
+        }
+
+        .film-strip::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                transparent,
+                transparent 20px,
+                #FFD700 20px,
+                #FFD700 22px
+            );
+        }
+
+        .container {
+            background: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 
+                0 20px 60px rgba(0, 0, 0, 0.8),
+                0 0 100px rgba(255, 215, 0, 0.1),
+                inset 0 0 50px rgba(255, 215, 0, 0.05);
+            max-width: 550px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at center, rgba(255, 215, 0, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        h1 {
+            text-align: center;
+            color: #FFD700;
+            margin-bottom: 10px;
+            font-size: 32px;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            font-weight: 700;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #ccc;
+            margin-bottom: 30px;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #FFD700;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-family: inherit;
+            background: rgba(40, 40, 40, 0.8);
+            color: #fff;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #888;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #FFD700;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+            background: rgba(50, 50, 50, 0.9);
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        select option {
+            background: #2a2a2a;
+            color: #fff;
+        }
+
+        .error {
+            color: #ff4444;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error.show {
+            display: block;
+        }
+
+        input.invalid, select.invalid, textarea.invalid {
+            border-color: #ff4444;
+        }
+
+        button {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.6);
+            background: linear-gradient(135deg, #FFA500 0%, #FFD700 100%);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            background: rgba(40, 167, 69, 0.9);
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            border-left: 4px solid #FFD700;
+            box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .row .form-group {
+            flex: 1;
+        }
+
+        .popcorn-icon {
+            font-size: 40px;
+            text-align: center;
+            margin-bottom: 10px;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.5));
+        }
+
+        @media (max-width: 600px) {
+            .curtain-left, .curtain-right {
+                width: 8%;
+            }
+            
+            .container {
+                padding: 30px 20px;
+            }
+            
+            .row {
+                flex-direction: column;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="film-strip"></div>
+    <div class="curtain-left"></div>
+    <div class="curtain-right"></div>
+    
+    <div class="container">
+        <div class="popcorn-icon">🍿</div>
+        <h1>🎬 CINEMA BOOKING</h1>
+        <p class="subtitle">Reserve Your Seats Now</p>
+        
+        <div id="successMessage" class="success-message">
+            🎉 Booking successful! Your tickets have been reserved.
+        </div>
+
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="name">Full Name *</label>
+                <input type="text" id="name" name="name" placeholder="Enter your full name">
+                <span class="error" id="nameError">Please enter a valid name (minimum 3 characters)</span>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email Address *</label>
+                <input type="email" id="email" name="email" placeholder="example@email.com">
+                <span class="error" id="emailError">Please enter a valid email address</span>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number *</label>
+                <input type="tel" id="phone" name="phone" placeholder="10-digit mobile number">
+                <span class="error" id="phoneError">Please enter a valid 10-digit phone number</span>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="movie">Select Movie *</label>
+                    <select id="movie" name="movie">
+                        <option value="">Choose a movie</option>
+                        <option value="avatar">Avatar: The Way of Water</option>
+                        <option value="inception">Inception</option>
+                        <option value="interstellar">Interstellar</option>
+                        <option value="dune">Dune: Part Two</option>
+                        <option value="oppenheimer">Oppenheimer</option>
+                    </select>
+                    <span class="error" id="movieError">Please select a movie</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="tickets">Tickets *</label>
+                    <input type="number" id="tickets" name="tickets" min="1" max="10" placeholder="1-10">
+                    <span class="error" id="ticketsError">Enter tickets between 1-10</span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label for="date">Show Date *</label>
+                    <input type="date" id="date" name="date">
+                    <span class="error" id="dateError">Please select a valid future date</span>
+                </div>
+
+                <div class="form-group">
+                    <label for="time">Showtime *</label>
+                    <select id="time" name="time">
+                        <option value="">Select time</option>
+                        <option value="10:00">10:00 AM</option>
+                        <option value="13:00">01:00 PM</option>
+                        <option value="16:00">04:00 PM</option>
+                        <option value="19:00">07:00 PM</option>
+                        <option value="22:00">10:00 PM</option>
+                    </select>
+                    <span class="error" id="timeError">Please select a showtime</span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="comments">Special Requests</label>
+                <textarea id="comments" name="comments" rows="3" placeholder="Any special requirements or preferences..."></textarea>
+            </div>
+
+            <button type="submit">🎟️ Book Tickets Now</button>
+        </form>
+    </div>
+
+    <script>
+        const form = document.getElementById('bookingForm');
+        const successMessage = document.getElementById('successMessage');
+
+        function validateName(name) {
+            return name.trim().length >= 3;
+        }
+
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        function validatePhone(phone) {
+            const re = /^[0-9]{10}$/;
+            return re.test(phone.replace(/\s/g, ''));
+        }
+
+        function validateTickets(tickets) {
+            const num = parseInt(tickets);
+            return num >= 1 && num <= 10;
+        }
+
+        function validateDate(date) {
+            const selectedDate = new Date(date);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            return selectedDate >= today;
+        }
+
+        function showError(input, errorElement, isValid) {
+            if (!isValid) {
+                input.classList.add('invalid');
+                errorElement.classList.add('show');
+            } else {
+                input.classList.remove('invalid');
+                errorElement.classList.remove('show');
+            }
+            return isValid;
+        }
+
+        document.getElementById('name').addEventListener('blur', function() {
+            const isValid = validateName(this.value);
+            showError(this, document.getElementById('nameError'), isValid);
+        });
+
+        document.getElementById('email').addEventListener('blur', function() {
+            const isValid = validateEmail(this.value);
+            showError(this, document.getElementById('emailError'), isValid);
+        });
+
+        document.getElementById('phone').addEventListener('blur', function() {
+            const isValid = validatePhone(this.value);
+            showError(this, document.getElementById('phoneError'), isValid);
+        });
+
+        document.getElementById('tickets').addEventListener('blur', function() {
+            const isValid = validateTickets(this.value);
+            showError(this, document.getElementById('ticketsError'), isValid);
+        });
+
+        document.getElementById('date').addEventListener('change', function() {
+            const isValid = validateDate(this.value);
+            showError(this, document.getElementById('dateError'), isValid);
+        });
+
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const movie = document.getElementById('movie').value;
+            const tickets = document.getElementById('tickets').value;
+            const date = document.getElementById('date').value;
+            const time = document.getElementById('time').value;
+
+            const validations = [
+                showError(document.getElementById('name'), document.getElementById('nameError'), validateName(name)),
+                showError(document.getElementById('email'), document.getElementById('emailError'), validateEmail(email)),
+                showError(document.getElementById('phone'), document.getElementById('phoneError'), validatePhone(phone)),
+                showError(document.getElementById('movie'), document.getElementById('movieError'), movie !== ''),
+                showError(document.getElementById('tickets'), document.getElementById('ticketsError'), validateTickets(tickets)),
+                showError(document.getElementById('date'), document.getElementById('dateError'), validateDate(date)),
+                showError(document.getElementById('time'), document.getElementById('timeError'), time !== '')
+            ];
+
+            if (validations.every(v => v)) {
+                successMessage.classList.add('show');
+                form.reset();
+                
+                document.querySelectorAll('.invalid').forEach(el => el.classList.remove('invalid'));
+                document.querySelectorAll('.error').forEach(el => el.classList.remove('show'));
+
+                setTimeout(() => {
+                    successMessage.classList.remove('show');
+                }, 5000);
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date').setAttribute('min', today);
+    </script>
+</body>
+</html>
