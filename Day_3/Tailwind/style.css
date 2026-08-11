@@ -1,0 +1,11 @@
+/* Background Image for Hero Section */
+.hero {
+  background-image: url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e");
+  background-size: cover;
+  background-position: center;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}

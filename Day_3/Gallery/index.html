@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desserts & Chocolates Gallery</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Poppins:wght@300;400;600&display=swap');
+
+        body {
+            background: linear-gradient(120deg, #ffd1dc, #ffe9a7, #d6f7ff);
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        header {
+            text-align: center;
+            padding: 30px;
+            animation: slideDown 2s;
+        }
+
+        header h1 {
+            font-family: 'Lobster', cursive;
+            font-size: 2.8rem;
+            color: #d6006f;
+            text-shadow: 3px 3px 8px rgba(0,0,0,0.2);
+        }
+
+        .gallery-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+            padding: 20px 0 60px 0;
+        }
+
+        .card {
+            width: 260px;
+            text-align: center;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.25);
+            transition: transform 0.4s, box-shadow 0.4s;
+            background: #fff;
+            cursor: pointer;
+            animation: fade 1.5s ease-in-out;
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+
+        .card:hover {
+            transform: scale(1.09);
+            box-shadow: 0 5px 18px rgba(0,0,0,0.4);
+        }
+
+        .card:hover img {
+            transform: scale(1.15) rotate(2deg);
+        }
+
+        .card p {
+            padding: 12px;
+            font-weight: 600;
+            color: #a20054;
+            letter-spacing: 0.5px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 18px;
+            background: #ff9db9;
+            color: #fff;
+            font-weight: 600;
+        }
+
+        /* Animations */
+        @keyframes fade {
+            from {opacity: 0; transform: scale(0.8);}
+            to {opacity: 1; transform: scale(1);}
+        }
+
+        @keyframes slideDown {
+            from {opacity: 0; transform: translateY(-50px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🍩 Sweet Treats – Desserts & Chocolates Gallery 🍰</h1>
+</header>
+
+<section class="gallery-container">
+
+    <div class="card"><img src="https://images.unsplash.com/photo-1551024506-0bccd828d307?w=400&h=400&fit=crop" alt="Strawberry Doughnut"><p>Strawberry Doughnut</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1614707267537-b85aaf00c4b7?w=400&h=400&fit=crop" alt="Chocolate Cupcake"><p>Chocolate Cupcake</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1586985289688-ca3cf47d3e6e?w=400&h=400&fit=crop" alt="Red Velvet Cake"><p>Red Velvet Cake</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1568051243851-f9b136146e97?w=400&h=400&fit=crop" alt="Belgium Waffle"><p>Belgium Waffle</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=400&h=400&fit=crop" alt="Brownie Ice Cream"><p>Brownie Ice Cream</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?w=400&h=400&fit=crop" alt="Chocolate Donut"><p>Chocolate Donut</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1599785209707-a456fc1337bb?w=400&h=400&fit=crop" alt="Choco Bars"><p>Choco Bars</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1519915028121-7d3463d20b13?w=400&h=400&fit=crop" alt="Fruit Tart"><p>Fruit Tart</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1569864358642-9d1684040f43?w=400&h=400&fit=crop" alt="Macarons"><p>Macarons</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1511381939415-e44015466834?w=400&h=400&fit=crop" alt="Dark Chocolate"><p>Dark Chocolate</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=400&h=400&fit=crop" alt="Rainbow Cake"><p>Rainbow Cake</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1606890737304-57a1ca8a5b62?w=400&h=400&fit=crop" alt="Choco Volcano"><p>Choco Volcano</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?w=400&h=400&fit=crop" alt="Cookies"><p>Cookies</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb?w=400&h=400&fit=crop" alt="Ice Cream Sundae"><p>Ice Cream Sundae</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1606313564200-e75d5e30476c?w=400&h=400&fit=crop" alt="Chocolate Fudge"><p>Chocolate Fudge</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1582058091505-f87a2e55a40f?w=400&h=400&fit=crop" alt="Candy Rolls"><p>Candy Rolls</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1578775887804-699de7086ff9?w=400&h=400&fit=crop" alt="Caramel Cake"><p>Caramel Cake</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=400&h=400&fit=crop" alt="Chocolate Chip Cookies"><p>Chocolate Chip Cookies</p></div>
+    <div class="card"><img src="https://thescranline.com/wp-content/uploads/2023/07/CHOCOLATE-SWISS-ROLL-CAKE-S-01.jpg" alt="Swiss Roll"><p>Swiss Roll</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?w=400&h=400&fit=crop" alt="Choco Silk Cup"><p>Choco Silk Cup</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=400&h=400&fit=crop" alt="Blueberry Cake"><p>Blueberry Cake</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?w=400&h=400&fit=crop" alt="Strawberry Ice Cream"><p>Strawberry Ice Cream</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1607920591413-4ec007e70023?w=400&h=400&fit=crop" alt="Nutty Brownie"><p>Nutty Brownie</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1563729784474-d77dbb933a9e?w=400&h=400&fit=crop" alt="Chocolate Jar Pudding"><p>Chocolate Jar Pudding</p></div>
+    <div class="card"><img src="https://images.unsplash.com/photo-1501443762994-82bd5dace89a?w=400&h=400&fit=crop" alt="Rainbow Ice Cream"><p>Rainbow Ice Cream</p></div>
+
+</section>
+
+</body>
+</html>
